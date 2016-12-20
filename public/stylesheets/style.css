@@ -1,0 +1,33 @@
+#editor {
+  height: 500px;
+  width: 100%;
+  /*margin-left: 50px;*/
+  resize: none;
+  padding: 10px;
+  font-family: Consolas, Menlo, 'Liberation Mono', Courier, monospace;
+}
+
+#result {
+  /*background-color: #000;*/
+  /*color: #000;*/
+  border: #ff0000 solid 1px;
+  height: 500px;
+  width: 100%;
+  overflow-y: scroll;
+  word-break : break-all;
+  padding: 10px;
+  font-family: Consolas, Menlo, 'Liberation Mono', Courier, monospace;
+  /*margin-right: 50px;*/
+}
+
+#execute {
+  margin: 0px 0px 20px 0px;
+}
+
+.row {
+  margin: 20px 50px;
+}
+
+.navbar {
+  border-radius: 0;
+}
