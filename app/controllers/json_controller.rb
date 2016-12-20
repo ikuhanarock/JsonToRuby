@@ -11,21 +11,47 @@ class JsonController < ApplicationController
     json = params[:query]
     
     begin
-      hash = JSON.parse(json)
+      jsonHash = JSON.parse(json)
     rescue JSON::ParserError => e
       render text: "JSON形式で入力してください。"
     end
     
-    # classを生成
     result = ""
-    result.concat("class RootObject\n")
+    hash = generateHashArray(jsonHash)
     hash.each do |name, data|
-      result.concat("\t@#{name}\n")
+      classStr = createRuby(name, data)
+      result.concat(classStr)
     end
-    result.concat("end");
     
     logger.info("result is #{result}")
     render text: result
     #render text: "Hello, world! #{result}"
+  end
+  
+  def generateHashArray(hash)
+    retHash = {}
+    retHash.store("RootObject", hash)
+    
+    hash.each do |name, data|
+      if data.kind_of?(Hash)
+        retHash.store(name, data)
+      end
+    end
+    
+    retHash
+  end
+  
+  def createRuby(className, hash)
+    # classを生成
+    result = ""
+    result.concat("class #{className}\n")
+    hash.each do |name, data|
+      if data.kind_of?(Hash)
+        result.concat("\t@#{name}\n")
+      else
+        result.concat("\t@#{name}\n")
+      end
+    end
+    result.concat("end\n\n");
   end
 end

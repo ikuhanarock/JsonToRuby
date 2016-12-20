@@ -1,6 +1,8 @@
 # Data
 
 {"foo": [1, null], "baz": {"foo": [true, "bar"], "baz": "qux"}}
+{"foo": [1, null], "baz": {"aaa": [true, "bar"], "bbb": {"ccc": [true, "bar"], "ddd": "qux"}}}
+{"foo": [1, null], "baz": {"aaa": [true, "bar"], "bbb": "qux"}, "ccc": {"ddd": [true, "bar"], "eee": "qux"}}
 
 # Molding
 
