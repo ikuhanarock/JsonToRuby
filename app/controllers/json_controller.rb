@@ -16,8 +16,12 @@ class JsonController < ApplicationController
       render text: "JSON形式で入力してください。"
     end
     
+    hash = {}
+    hash.store("RootObject", jsonHash)
+    nestHash = serializeHash(jsonHash)
+    hash = hash.merge(nestHash)
+    
     result = ""
-    hash = generateHashArray(jsonHash)
     hash.each do |name, data|
       classStr = createRuby(name, data)
       result.concat(classStr)
@@ -25,16 +29,19 @@ class JsonController < ApplicationController
     
     logger.info("result is #{result}")
     render text: result
-    #render text: "Hello, world! #{result}"
   end
   
-  def generateHashArray(hash)
+  def serializeHash(hash)
     retHash = {}
-    retHash.store("RootObject", hash)
+    
+    logger.debug("hash parameter = #{hash}")
     
     hash.each do |name, data|
       if data.kind_of?(Hash)
+        logger.debug("hash parameter2 = #{hash}")
         retHash.store(name, data)
+        nestHash = serializeHash(data)
+        retHash = retHash.merge(nestHash)
       end
     end
     
